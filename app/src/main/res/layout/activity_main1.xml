@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="currentTemp"
+            type="String" />
+
+        <variable
+            name="viewmodel"
+            type="com.example.weather.ui.viewmodel.MainActivityViewModel" />
+
+        <variable
+            name="cityName"
+            type="String" />
+
+        <variable
+            name="clickHandler"
+            type="com.example.weather.ui.activity.MainActivity1.ClickHandler" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/screen_bg"
+        tools:context=".ui.activity.MainActivity1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{viewmodel.progress? View.GONE : View.VISIBLE}"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#E85959"
+                android:gravity="center"
+                android:visibility="@{viewmodel.error? View.VISIBLE: View.GONE}"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="54sp"
+                    android:fontFamily="@font/roboto_thin"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="@string/something_n_went_wrong_nat_our_end"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="44dp"
+                    android:background="#4A4A4A"
+                    android:text="@string/retry"
+                    android:onClick="@{clickHandler::onRetryClick}"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="@{viewmodel.error? View.GONE: View.VISIBLE}"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:currentTemp="@{currentTemp}"
+                    android:textSize="96sp"
+                    android:textColor="#2A2A2A"
+                    android:layout_marginTop="56dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_black"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#556799"
+                    android:text="@{cityName}"
+                    android:fontFamily="@font/roboto_thin"
+                    android:textSize="36sp"
+                    android:layout_gravity="center"
+                    />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="62dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/white"
+                    >
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_centerInParent="true"
+            android:theme="@style/ProgressBarTheme"
+            android:visibility="@{viewmodel.progress? View.VISIBLE : View.GONE}" />
+    </RelativeLayout>
+
+
+</layout>
